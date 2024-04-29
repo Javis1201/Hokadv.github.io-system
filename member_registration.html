@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            background-color: #0056b3;
+        }
+        .register-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="register-title">Member Registration</h1>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="text" id="age" placeholder="Enter your age">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+            <label for="icNumber">IC Number:</label>
+            <input type="text" id="icNumber" placeholder="Enter your IC number">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" placeholder="Enter your phone number">
+        </div>
+        <div class="form-group">
+            <label for="bankName">Bank Name:</label>
+            <input type="text" id="bankName" placeholder="Enter your bank name">
+        </div>
+        <div class="form-group">
+            <label for="bankAccount">Bank Account:</label>
+            <input type="text" id="bankAccount" placeholder="Enter your bank account number">
+        </div>
+        <div class="form-group">
+            <label for="level">Membership Level:</label>
+            <select id="level">
+                <option value="VVIP Member">VVIP Member</option>
+                <option value="VIP Member">VIP Member</option>
+                <option value="Classic Member">Classic Member</option>
+                <option value="Standard Member">Standard Member</option>
+                <option value="New Member">New Member</option>
+            </select>
+        </div>
+        <button class="btn" onclick="registerMember()">Register</button>
+    </div>
+
+    <script>
+        function registerMember() {
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const email = document.getElementById('email').value;
+            const icNumber = document.getElementById('icNumber').value;
+            const phone = document.getElementById('phone').value;
+            const bankName = document.getElementById('bankName').value;
+            const bankAccount = document.getElementById('bankAccount').value;
+            const level = document.getElementById('level').value;
+    
+            // 构造新的会员对象
+            const newMember = {
+                name: name,
+                age: age,
+                email: email,
+                ICNumber: icNumber,
+                Phone: phone,
+                bankname: bankName,
+                BankAccount: bankAccount,
+                level: level
+            };
+    
+            // 从本地存储中获取客户数据库
+            let customers = JSON.parse(localStorage.getItem('customers')) || [];
+    
+            // 将新的会员添加到客户数据库中
+            customers.push(newMember);
+    
+            // 将更新后的客户数据库保存到本地存储中
+            localStorage.setItem('customers', JSON.stringify(customers));
+    
+            // 在这里可以添加其他操作，例如清空表单或者显示注册成功消息
+    
+            // 弹出注册成功消息
+            alert('Member registered successfully!');
+    
+            // 注册成功后跳转到主页
+            window.location.href = "mainpage.html";
+        }
+    </script>
+    </html>

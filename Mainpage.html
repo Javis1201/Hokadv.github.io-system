@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #686868;
+            padding-top: 20px;
+            transition: 0.5s;
+            overflow-x: hidden;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #fff;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        .content {
+            margin-left: 0;
+            padding: 20px;
+        }
+
+        .logout {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .logout:hover {
+            color: #ddd;
+        }
+
+        .openbtn {
+            font-size: 30px;
+            cursor: pointer;
+            background-color: #111;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 0;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+        }
+
+        .openbtn:hover {
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="mySidebar">
+        <a href="Mainpage.html">Menu</a>
+        <a href="loan_details.html">Member Introduction</a>
+        <a href="HokAdv.html">Online Calculation</a>
+        <a href="member_registration.html">Member Register</a>
+        <a href="recordcus.html">Payment Details</a>
+        <a href="aboutus.html">About Us</a>
+    </div>
+
+    <button class="openbtn" onclick="toggleNav()">&#9776;</button>
+
+
+    <script>
+        function toggleNav() {
+            const sidebar = document.getElementById("mySidebar");
+            if (sidebar.style.width === "200px") {
+                sidebar.style.width = "0";
+            } else {
+                sidebar.style.width = "200px";
+            }
+        }
+
+        function logout() {
+            // Redirect to logout page or perform logout action
+            // For now, let's just redirect to the main page
+            window.location.href = "Login.html";
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 30px; /* 圆角处理 */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+
+        #searchInput {
+            padding: 15px;
+            margin-bottom: 20px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+
+        button {
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Main Page</h1>
+        <!-- 搜索客户名字的输入框 -->
+        <input type="text" id="searchInput" placeholder="Enter customer name">
+        <!-- 搜索按钮 -->
+        <button onclick="searchCustomer()">Search</button>
+        <!-- 客户详情 -->
+        <div id="customerDetails"></div>
+    </div>
+
+    <script>
+        // 客户数据库，包含客户的详细信息
+        const customers = [
+            { 
+                name: 'Javis Ting', 
+                age: 25, 
+                email: 'javisproduction1@gmail.com', 
+                ICNumber: '981201-13-6117',
+                Phone: '+6019 582 7520', 
+                bankname:'RHB Bank Berhad',
+                BankAccount: '1234 5678 9012 3456', 
+                level: 'VVIP Member' 
+            },
+            { 
+                name: 'Camelia Chandy', 
+                age: 22, 
+                email: 'cameliachandy55@gmail.com', 
+                ICNumber: '020628-13-0678',
+                Phone: '0165491937', 
+                bankname:'RHB Bank Berhad',
+                bankAccount: '16132900022621', 
+                level: 'New Member' 
+            },
+            { 
+                name: 'Jereld Rvd', 
+                age: 20, 
+                email: 'jereldrvd@gmail.com', 
+                ICNumber: '981201-13-6117',
+                Phone: '+6016 853 4338', 
+                bankname:'RHB Bank Berhad',
+                bankAccount: '9876 5432 1098 7654', 
+                level: 'Classic Member' 
+            },
+            { 
+                name: 'Johnny Lihan Ding', 
+                age: 20, 
+                email: 'johnny@gmail.com', 
+                ICNumber: '981201-13-6117',
+                Phone: '+6012 345 6789', 
+                bankname:'RHB Bank Berhad',
+                bankAccount: '9876 5432 1098 7654', 
+                level: 'Standard Member' 
+            },
+            { 
+                name: 'Amy Natasya', 
+                age: 22, 
+                email: 'amylia.2u@gmail.com', 
+                ICNumber: '030424-13- 1248',
+                Phone: '0178557473', 
+                bankname:'Touch N Go',
+                BankAccount: '100830985997', 
+                level: 'New Member' 
+            },
+            { 
+                name: 'Micheal Owen Tingang', 
+                age: 25, 
+                email: 'Michealowentingang99@gmail.com ', 
+                ICNumber: '991010-13-5655',
+                Phone: '01114911905 ', 
+                bankname:'Am Bank Berhad',
+                BankAccount: '8881054262259', 
+                level: 'New Member' 
+            },
+            { 
+                name: 'Amelisa Liana Sigan', 
+                age: 18, 
+                email: 'amelisaliana13@gmail.com', 
+                ICNumber: '060120-13-0710',
+                Phone: '0115378679', 
+                bankname:'Touch N Go',
+                BankAccount: '161260448850', 
+                level: 'New Member' 
+            },
+            // 添加更多客户信息
+        ];
+
+        // 搜索客户功能
+        function searchCustomer() {
+            const searchInput = document.getElementById('searchInput').value;
+            // 在客户数据库中查找与搜索词匹配的客户
+            const customer = customers.find(customer => customer.name.toLowerCase() === searchInput.toLowerCase());
+            if (customer) {
+                // 如果找到客户，跳转到客户详情页面
+                window.location.href = `customer_details.html?name=${encodeURIComponent(customer.name)}`;
+            } else {
+                // 如果未找到客户，显示未找到消息
+                document.getElementById('customerDetails').innerHTML = '<p>Customer not found.</p>';
+            }
+        }
+
+    </script>
+</body>
+</html>

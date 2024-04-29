@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 20px; /* 圆角处理 */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+
+        #customerDetails {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        #customerDetails p {
+            margin: 10px 0;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Customer Details</h1>
+        <div id="customerDetails"></div>
+    </div>
+
+    <script>
+        // 解析URL参数以获取客户名字
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const customerName = urlParams.get('name');
+
+        // 客户数据库，包含客户的详细信息
+        const customers = [
+        { 
+                name: 'Javis Ting', 
+                age: 25, 
+                email: 'javisproduction1@gmail.com', 
+                ICNumber: '981201-13-6117',
+                Phone: '+6019 582 7520', 
+                bankname:'RHB Bank Berhad',
+                BankAccount: '1234 5678 9012 3456', 
+                level: 'VVIP Member' 
+            },
+            { 
+                name: 'Camelia Chandy', 
+                age: 22, 
+                email: 'cameliachandy55@gmail.com', 
+                ICNumber: '020628-13-0678',
+                Phone: '0165491937', 
+                bankname:'RHB Bank Berhad',
+                bankAccount: '16132900022621', 
+                level: 'New Member' 
+            },
+            { 
+                name: 'Jereld Rvd', 
+                age: 20, 
+                email: 'jereldrvd@gmail.com', 
+                ICNumber: '981201-13-6117',
+                Phone: '+6016 853 4338', 
+                bankname:'RHB Bank Berhad',
+                bankAccount: '9876 5432 1098 7654', 
+                level: 'Classic Member' 
+            },
+            { 
+                name: 'Johnny Lihan Ding', 
+                age: 20, 
+                email: 'johnny@gmail.com', 
+                ICNumber: '981201-13-6117',
+                Phone: '+6012 345 6789', 
+                bankname:'RHB Bank Berhad',
+                bankAccount: '9876 5432 1098 7654', 
+                level: 'Standard Member' 
+            },
+            { 
+                name: 'Amy Natasya', 
+                age: 22, 
+                email: 'amylia.2u@gmail.com', 
+                ICNumber: '030424-13- 1248',
+                Phone: '0178557473', 
+                bankname:'Touch N Go',
+                BankAccount: '100830985997', 
+                level: 'New Member' 
+            },
+            { 
+                name: 'Micheal Owen Tingang', 
+                age: 25, 
+                email: 'Michealowentingang99@gmail.com ', 
+                ICNumber: '991010-13-5655',
+                Phone: '01114911905 ', 
+                bankname:'Am Bank Berhad',
+                BankAccount: '8881054262259', 
+                level: 'New Member' 
+            },
+            { 
+                name: 'Amelisa Liana Sigan', 
+                age: 18, 
+                email: 'amelisaliana13@gmail.com', 
+                ICNumber: '060120-13-0710',
+                Phone: '0115378679', 
+                bankname:'Touch N Go',
+                BankAccount: '161260448850', 
+                level: 'New Member' 
+            },
+            // 添加更多客户信息
+        ];
+
+        // 在页面上显示客户详情
+        const customer = customers.find(customer => customer.name.toLowerCase() === customerName.toLowerCase());
+        if (customer) {
+            document.getElementById('customerDetails').innerHTML = `
+                <p><strong>Name:</strong> ${customer.name}</p>
+                <p><strong>Age:</strong> ${customer.age}</p>
+                <p><strong>Email:</strong> ${customer.email}</p>
+                <p><strong>IC Number:</strong> ${customer.ICNumber}</p>
+                <p><strong>Phone:</strong> ${customer.Phone}</p>
+                <p><strong>Bank Name:</strong> ${customer.bankname}</p>
+                <p><strong>Bank Account:</strong> ${customer.BankAccount}</p>
+                <p><strong>Level:</strong> ${customer.level}</p>
+                <a href="count.html"><button class="btn">Advance</button></a>
+            `;
+        } else {
+            // 如果未找到客户，显示未找到消息
+            document.getElementById('customerDetails').innerHTML = '<p><em>Customer not found.</em></p>';
+        }
+    </script>
+</body>
+</html>

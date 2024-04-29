@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HokAdv.Payment Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 70%;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-x: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .table-header {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background-color: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #495057;
+            font-weight: 400;
+        }
+
+        td button {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .repaid {
+            background-color: green;
+            color: #fff;
+        }
+
+        .unpaid {
+            background-color: red;
+            color: #fff;
+        }
+
+        button[disabled] {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #saveButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #saveButton:hover {
+            background-color: #0056b3;
+        }
+
+        #debtForm input[type="text"] {
+            width: 200px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        #debtForm select {
+            width: 200px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        #debtForm {
+            text-align: center;
+        }
+
+        #debtForm input[type="submit"] {
+            width: auto;
+            display: inline-block;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #debtForm input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        ::-webkit-input-placeholder {
+            color: #adb5bd;
+        }
+
+        :-moz-placeholder {
+            color: #adb5bd;
+        }
+
+        ::-moz-placeholder {
+            color: #adb5bd;
+        }
+
+        :-ms-input-placeholder {
+            color: #adb5bd;
+        }
+
+        .record-container {
+            max-height: 400px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>HokAdv.Payment Detail</h1>
+    <input type="text" id="searchInput" placeholder="Search by debtor name">
+    <div class="record-container">
+        <table>
+            <thead class="table-header">
+            <tr>
+                <th>Debtor</th>
+                <th>Amount</th>
+                <th>Due Date</th>
+                <th>Repayment Amount</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="debtRecords">
+            <!-- Records will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+<form id="debtForm">
+    <input type="text" id="debtorName" placeholder="Debtor">
+    <input type="text" id="amount" placeholder="Amount">
+    <select id="repaymentDate">
+        <option value="7">7 Days</option>
+        <option value="14">14 Days</option>
+        <option value="21">21 Days</option>
+        <option value="30">30 Days</option>
+    </select>
+    <input type="submit" value="Add Record">
+</form>
+<button id="saveButton">Save Records</button>
+
+
+<script>
+    // Load saved data from local storage
+    window.onload = function() {
+        var savedData = JSON.parse(localStorage.getItem('debtRecords'));
+        if (savedData) {
+            savedData.forEach(function(record) {
+                addRecordToTable(record);
+            });
+        }
+    };
+
+    // Add record to table and local storage
+    function addRecordToTable(record) {
+        var newRow = document.createElement('tr');
+        newRow.innerHTML = '<td>' + record.debtorName + '</td>' +
+            '<td class="debtAmount">' + record.amount + '</td>' +
+            '<td>' + record.date + '</td>' +
+            '<td class="repaymentAmount">' + record.repaymentAmount + '</td>' +
+            '<td><button class="repaymentButton unpaid">Unpaid</button></td>' +
+            '<td><button class="deleteButton">🗑️</button></td>';
+        document.getElementById('debtRecords').appendChild(newRow);
+        updateDebtStatus(newRow); // Update status
+    }
+
+    // Update status
+    function updateDebtStatus(row) {
+        var repaymentButton = row.querySelector('.repaymentButton');
+        var repaymentAmountCell = row.querySelector('.repaymentAmount');
+        var repaymentAmount = parseFloat(repaymentAmountCell.textContent);
+        if (repaymentAmount === 0) {
+            repaymentButton.textContent = 'Repaid';
+            repaymentButton.classList.remove('unpaid');
+            repaymentButton.classList.add('repaid');
+            repaymentButton.disabled = true;
+        } else {
+            repaymentButton.textContent = 'Unpaid';
+            repaymentButton.classList.remove('repaid');
+            repaymentButton.classList.add('unpaid');
+            repaymentButton.disabled = false;
+        }
+    }
+
+    // Add record
+    document.getElementById('debtForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var debtorName = document.getElementById('debtorName').value;
+        var amount = parseFloat(document.getElementById('amount').value);
+        var repaymentDate = parseFloat(document.getElementById('repaymentDate').value);
+        var repaymentAmount = calculateRepaymentAmount(amount, repaymentDate);
+
+        // Format date
+        var today = new Date();
+        var dueDate = new Date(today.getTime() + repaymentDate * 24 * 60 * 60 * 1000);
+        var formattedDate = formatTwoDigits(dueDate.getDate()) + '/' + formatTwoDigits(dueDate.getMonth() + 1) + '/' + dueDate.getFullYear();
+
+        addRecordToTable({
+            debtorName: debtorName,
+            amount: amount,
+            date: formattedDate, // Save formatted date
+            repaymentAmount: repaymentAmount
+        });
+
+        // Clear form
+        document.getElementById('debtorName').value = '';
+        document.getElementById('amount').value = '';
+        document.getElementById('repaymentDate').selectedIndex = 0;
+    });
+
+    // Repayment button click event
+    document.getElementById('debtRecords').addEventListener('click', function(event) {
+        if (event.target.classList.contains('repaymentButton')) {
+            var row = event.target.parentNode.parentNode;
+            var repaymentAmountCell = row.querySelector('.repaymentAmount');
+            repaymentAmountCell.textContent = '0';
+            updateDebtStatus(row);
+        } else if (event.target.classList.contains('deleteButton')) {
+            var row = event.target.parentNode.parentNode;
+            row.remove();
+        }
+    });
+
+    // Save records to local storage
+    document.getElementById('saveButton').addEventListener('click', function() {
+        var tableRows = document.querySelectorAll('#debtRecords tr');
+        var records = [];
+        tableRows.forEach(function(row) {
+            var cells = row.querySelectorAll('td');
+            if (cells.length === 6) {
+                var record = {
+                    debtorName: cells[0].innerText,
+                    amount: parseFloat(cells[1].innerText),
+                    date: cells[2].innerText,
+                    repaymentAmount: parseFloat(cells[3].innerText)
+                };
+                records.push(record);
+            }
+        });
+        localStorage.setItem('debtRecords', JSON.stringify(records));
+        alert('Records saved successfully!');
+    });
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', function() {
+        var searchValue = this.value.toLowerCase();
+        var rows = document.querySelectorAll('#debtRecords tr');
+        rows.forEach(function(row) {
+            var debtorName = row.querySelector('td:nth-child(1)').innerText.toLowerCase();
+            if (debtorName.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+
+    // Format the day and month to always have two digits
+    function formatTwoDigits(number) {
+        return (number < 10 ? '0' : '') + number;
+    }
+
+    // Calculate repayment amount based on selected date
+    function calculateRepaymentAmount(amount, repaymentDate) {
+        var interestRate = 0;
+        if (repaymentDate === 7) {
+            interestRate = 0.05;
+        } else if (repaymentDate === 14) {
+            interestRate = 0.08;
+        } else if (repaymentDate === 21) {
+            interestRate = 0.1;
+        } else if (repaymentDate === 30) {
+            interestRate = 0.14;
+        }
+        return (amount * (1 + interestRate)).toFixed(2);
+    }
+</script>
+</body>
+</html>

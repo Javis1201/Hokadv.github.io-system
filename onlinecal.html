@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Repayment Calculator - High-end CSS Design</title>
+    <style>
+        /* CSS 样式 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease forwards;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 30px;
+            font-size: 36px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px 0;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #repaymentAmount {
+            margin-top: 30px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Loan Repayment Calculator</h1>
+        <div>
+            <label for="loanAmount">Loan Amount:</label>
+            <input type="number" id="loanAmount" placeholder="Loan amount">
+        </div>
+        <div>
+            <label for="loanTerm">Repayment Period:</label>
+            <select id="loanTerm">
+                <option value="7">7 Days</option>
+                <option value="14">14 Days</option>
+                <option value="21">21 Days</option>
+                <option value="30">30 Days</option>
+                <option value="60">2 Months (60 Days)</option>
+                <option value="90">3 Months (90 Days)</option>
+                <option value="120">4 Months (120 Days)</option>
+                <option value="150">5 Months (150 Days)</option>
+                <option value="180">6 Months (180 Days)</option>
+            </select>
+        </div>
+        <button class="button" onclick="calculateRepayment()">Calculate</button>
+        <div id="repaymentAmount"></div>
+    </div>
+
+    <script>
+        // JavaScript 代码
+        function calculateRepayment() {
+            // 获取输入值
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const loanTerm = parseInt(document.getElementById('loanTerm').value);
+
+            // 计算还款金额
+            const repaymentAmount = loanAmount * (1 + (loanTerm / 100));
+
+            // 显示还款金额
+            document.getElementById('repaymentAmount').innerHTML = `
+                <h2>Repayment Amount:</h2>
+                <p>$${repaymentAmount.toFixed(2)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

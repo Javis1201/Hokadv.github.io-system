@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 30px; /* 圆角处理 */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        button[type="submit"] {
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            display: block;
+            margin: 20px auto;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            transform: scale(1.1);
+            background-color: #0056b3;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #0d943f; /* Green color */
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: none; /* 默认隐藏加载动画 */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading {
+            display: block; /* 显示加载动画 */
+        }
+
+        #message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HokAdv Member</h1>
+        <form id="loginForm" onsubmit="login(); return false;">
+            <input type="text" id="username" name="username" placeholder="Enter username" required>
+            <input type="password" id="password" name="password" placeholder="Enter password" required>
+            <button type="submit" id="loginBtn">Login <span class="loader"></span></button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        // 用户名和密码列表
+        const users = [
+            { name: 'User 1', username: 'javis120', password: '19981201' },
+            { name: 'User 2', username: 'came54', password: 'bluesky28' },
+            { name: 'User 3', username: 'blackctan', password: 'blackctan69' },
+            { name: 'User 4', username: 'hanzz', password: 'lihanhan04' }
+            // 添加更多用户信息
+        ];
+
+        function login() {
+            // 获取输入的用户名和密码
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+    
+            // 遍历用户列表，进行用户名和密码验证
+            const user = users.find(user => user.username === username && user.password === password);
+            if (user) {
+                // 登录成功
+                document.getElementById('message').textContent = `Welcome, ${user.name}! Login successful. Redirecting...`;
+                // 这里可以重定向到其他页面或者执行其他操作
+                window.location.href = 'Mainpage.html'; // 重定向到HokAdv.html页面
+            } else {
+                // 登录失败
+                document.getElementById('message').textContent = 'Invalid username or password. Please try again.';
+            }
+        }
+    </script>
+</body>
+</html>
